@@ -3,6 +3,7 @@ const UserItem = require('../models/UserItem');
 
 const resolvers = {
   Query: {
+    // should map to query name -> otherwise it will not work
     user: async (_, { id }) => {
       try {
         const user = await User.findById(id);
@@ -11,6 +12,7 @@ const resolvers = {
         throw new Error("Error retrieving user");
       }
     },
+    // should map to query name -> otherwise it will not work
     users: async (_, { page = 0, perPage = 10 }) => {
       try {
         const total = await User.countDocuments();
@@ -26,6 +28,7 @@ const resolvers = {
         throw new Error("Error retrieving users");
       }
     },
+    // should map to query name -> otherwise it will not work
     userItems: async (_, { id }) => {
       try {
         const userItems = await UserItem.find({ userId: id }).exec();
@@ -46,6 +49,7 @@ const resolvers = {
         throw new Error("Error creating user");
       }
     },
+    // should map to query name -> otherwise it will not work
     updateUser: async (_, { id, firstName, lastName, email }) => {
       try {
         const user = await User.findByIdAndUpdate(
@@ -58,6 +62,7 @@ const resolvers = {
         throw new Error("Error updating user");
       }
     },
+    // should map to query name -> otherwise it will not work
     createUserItem: async (_, { userId, itemName, description, amount }) => {
       try {
         const userItem = new UserItem({ userId, itemName, description, amount });
@@ -67,6 +72,7 @@ const resolvers = {
         throw new Error("Error creating user item");
       }
     },
+    // should map to query name -> otherwise it will not work
     deleteUserItem: async (_, { id }) => {
       try {
         const userItem = await UserItem.findByIdAndDelete(id);
@@ -85,7 +91,7 @@ const resolvers = {
         }
     },
   },
-  // without it items will not be fetched on user
+  // without it items will not be fetched on user, graphql invokes it when there items in user/users query
   User: {
     items: async (parent) => UserItem.find({ userId: parent.id }), // Fetch items for a user
   },

@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const updateUser = async () => {
-    const graphqlEndpoint = 'http://localhost:3000';
+    const graphqlEndpoint = 'http://localhost:3000/graphql';
   
     const query = `
         mutation updateUser($id: ID!, $firstName: String!, $lastName: String!, $email: String!) {
@@ -14,14 +14,14 @@ const updateUser = async () => {
         }
     `;
 
-  const variables = { id: '6745acfd601173feaa294ed9', firstName: 'updated', lastName: 'updated', email: 'updated@gmail.com' };
+  const variables = { id: '6745acfd601173feaa294e1d', firstName: 'updated', lastName: 'updated', email: 'updated1@gmail.com' };
   
     try {
       const response = await axios.post(graphqlEndpoint, { query, variables }, {
         headers: { 'Content-Type': 'application/json' },
       });
   
-      return response.data.data.updateUser;
+      return response.data.data;
     } catch (error) {
       console.error('Error updating user:', error);
       return [];

@@ -1,14 +1,23 @@
 const axios = require('axios');
 
 const fetchUsers = async () => {
-    const graphqlEndpoint = 'http://localhost:3000';
+    const graphqlEndpoint = 'http://localhost:3000/graphql';
   
     const query = `
       query {
-        getUsers {
-          id
-          firstName
-          lastName
+        users(page: 0, perPage: 10) {
+          users {
+            id
+            firstName
+            lastName
+            items {
+              id
+              itemName
+            }
+          }
+          total
+          totalPages
+          currentPage
         }
       }
     `;
@@ -18,9 +27,9 @@ const fetchUsers = async () => {
         headers: { 'Content-Type': 'application/json' },
       });
   
-      return response.data.data.getUsers;
+      return response.data.data.users;
     } catch (error) {
-      console.error('Error fetching users:', error);
+      console.error('Error fetching users:', error.response.data);
       return [];
     }
 };  

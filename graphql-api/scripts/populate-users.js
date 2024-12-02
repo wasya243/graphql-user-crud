@@ -41,7 +41,7 @@ function generateUsers(numberOfUsers) {
 
 const populate = async () => {
     try {
-        const graphqlEndpoint = 'http://localhost:3000';
+        const graphqlEndpoint = 'http://localhost:3000/graphql';
         const users = generateUsers(100);
 
         for(const user of users) {

@@ -1,27 +1,33 @@
 const axios = require('axios');
 
 const fetchUser = async () => {
-    const graphqlEndpoint = 'http://localhost:3000';
+    const graphqlEndpoint = 'http://localhost:3000/graphql';
   
     const query = `
-        query getUser($id: ID!) {
-            getUser(id: $id) {
+        query user($id: ID!) {
+            user(id: $id) {
                 id
                 firstName
                 lastName
                 email
+                items {
+                  id
+                  itemName
+                  description
+                  amount
+                }
             }
         }
     `;
 
-  const variables = { id: '6745acfd601173feaa294ed9' };
+  const variables = { id: '6745acfd601173feaa294e17' };
   
     try {
       const response = await axios.post(graphqlEndpoint, { query, variables }, {
         headers: { 'Content-Type': 'application/json' },
       });
   
-      return response.data.data.getUser;
+      return response.data.data.user;
     } catch (error) {
       console.error('Error fetching user:', error);
       return [];
